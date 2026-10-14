@@ -1,0 +1,695 @@
+<!doctype html>
+<html lang="my" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>7Hrs Automobile — Feature ဈေးနှုန်း တွက်ချက်ရန်</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fafafa; --panel:#ffffff; --ink:#111111; --muted:#737373; --line:#ebebeb; --line-strong:#d4d4d4;
+  --hover:#f6f6f6; --sel:#f4f4f4; --on-ink:#ffffff; --r:6px;
+  --check:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5l3 3 6-7' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0b0b0b; --panel:#141414; --ink:#f5f5f5; --muted:#8f8f8f; --line:#252525; --line-strong:#3a3a3a;
+    --hover:#1a1a1a; --sel:#1c1c1c; --on-ink:#0b0b0b;
+    --check:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5l3 3 6-7' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0b0b0b; --panel:#141414; --ink:#f5f5f5; --muted:#8f8f8f; --line:#252525; --line-strong:#3a3a3a;
+  --hover:#1a1a1a; --sel:#1c1c1c; --on-ink:#0b0b0b;
+  --check:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5l3 3 6-7' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Noto Sans Myanmar","IBM Plex Sans","Padauk","Myanmar Text",system-ui,sans-serif;
+  line-height:1.65;font-size:15px}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.wrap{max-width:1120px;margin:0 auto;padding:40px 20px 120px}
+header.top{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;margin-bottom:32px}
+h1{font-size:22px;margin:0;line-height:1.4;font-weight:600}
+.sub{color:var(--muted);font-size:13.5px;margin:4px 0 0}
+.brand{display:flex;gap:16px;align-items:center}
+.logo{width:56px;height:56px;border-radius:var(--r);display:block;flex:none}
+.topbtns{display:flex;gap:8px;align-items:center}
+.theme-btn{border:1px solid var(--line-strong);background:var(--panel);color:var(--ink);border-radius:var(--r);padding:6px 12px;cursor:pointer;font:inherit;font-size:13px}
+.theme-btn:hover{background:var(--hover)}
+.langseg{display:inline-flex;border:1px solid var(--line-strong);border-radius:var(--r);overflow:hidden;background:var(--panel)}
+.langseg button{border:0;background:transparent;color:var(--muted);font:inherit;font-size:13px;padding:6px 12px;cursor:pointer}
+.langseg button:hover{color:var(--ink)}
+.langseg button[aria-pressed="true"]{background:var(--ink);color:var(--on-ink)}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:32px;align-items:start}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r)}
+.toolbar{display:flex;flex-wrap:wrap;gap:12px;padding:12px;margin-bottom:20px;align-items:center}
+.toolbar input[type=search]{flex:1 1 200px;min-width:0;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:var(--r);padding:8px 12px;font:inherit;font-size:14px}
+.toolbar input[type=search]:focus{outline:none;border-color:var(--ink)}
+.chk{display:inline-flex;gap:8px;align-items:center;font-size:13px;color:var(--muted);cursor:pointer;user-select:none}
+.btn{border:1px solid var(--line-strong);background:var(--panel);color:var(--ink);border-radius:var(--r);padding:8px 14px;cursor:pointer;font:inherit;font-size:13px;transition:background .12s}
+.btn:hover{background:var(--hover)}
+.btn.primary{background:var(--ink);border-color:var(--ink);color:var(--on-ink)}
+.btn.primary:hover{opacity:.88;background:var(--ink)}
+.group{margin-bottom:20px;overflow:hidden}
+.ghead{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:16px 18px;border-bottom:1px solid var(--line)}
+.ghead h2{font-size:15.5px;margin:0;line-height:1.4;font-weight:600}
+.ghead .meta{font-size:12.5px;color:var(--muted);margin-top:1px}
+.ghead .gact{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+.pill{font-size:12px;border-radius:999px;padding:1px 10px;background:var(--sel);color:var(--muted);white-space:nowrap}
+.linkbtn{background:none;border:0;border-radius:4px;color:var(--muted);cursor:pointer;font:inherit;font-size:12.5px;padding:3px 8px}
+.linkbtn:hover{color:var(--ink);background:var(--hover)}
+.items{display:grid;grid-template-columns:1fr}
+.item{display:grid;grid-template-columns:20px minmax(0,1fr) auto;gap:14px;padding:14px 18px;border-top:1px solid var(--line);cursor:pointer;align-items:start}
+.item:first-child{border-top:0}
+.item:hover{background:var(--hover)}
+.item.on{background:var(--sel)}
+.item.base{cursor:default;background:transparent}
+.item.base:hover{background:transparent}
+.item input{appearance:none;-webkit-appearance:none;width:18px;height:18px;margin:3px 0 0;border:1.5px solid var(--line-strong);border-radius:4px;background:var(--panel) center/14px no-repeat;cursor:pointer;display:block;transition:background .1s,border-color .1s}
+.item input:hover{border-color:var(--ink)}
+.item input:checked{background-color:var(--ink);background-image:var(--check);border-color:var(--ink)}
+.item.base input{cursor:not-allowed;opacity:.35;border-color:var(--ink)}
+.item.base input:hover{border-color:var(--ink)}
+.iname{font-weight:500;font-size:14.5px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.idesc{color:var(--muted);font-size:13px;margin-top:2px}
+.ireq{color:var(--muted);font-size:12px;margin-top:3px}
+.badge{font-size:10.5px;font-weight:500;border-radius:4px;padding:1px 7px;background:var(--sel);color:var(--muted);letter-spacing:.5px;line-height:1.5}
+.item.base .badge{background:var(--ink);color:var(--on-ink)}
+.badge.p2{background:transparent;border:1px solid var(--line-strong);color:var(--muted)}
+.iprice{font-family:"IBM Plex Sans",system-ui,sans-serif;font-variant-numeric:tabular-nums;font-weight:500;white-space:nowrap;text-align:right;font-size:14px}
+.item:not(.on):not(.base) .iprice{color:var(--muted)}
+aside{position:sticky;top:20px}
+.sum{padding:20px}
+.sum h3{margin:0 0 16px;font-size:15px;font-weight:600}
+.field{display:block;margin-bottom:12px}
+.field span{display:block;font-size:12.5px;color:var(--muted);margin-bottom:4px}
+.field input{width:100%;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:var(--r);padding:8px 10px;font:inherit;font-size:14px}
+.field input:focus{outline:none;border-color:var(--ink)}
+.field .fixed{padding:8px 10px;border:1px solid var(--line);background:var(--bg);border-radius:var(--r);font-size:14px;font-weight:500}
+.row{display:flex;justify-content:space-between;gap:10px;padding:5px 0;font-size:14px;color:var(--muted)}
+.row .v{font-family:"IBM Plex Sans",system-ui,sans-serif;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap}
+.row.sep{border-top:1px solid var(--line);margin-top:6px;padding-top:10px}
+.total{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-top:12px;padding-top:16px;border-top:1px solid var(--line)}
+.total .l{font-weight:500}
+.total .v{font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:24px;font-weight:600;font-variant-numeric:tabular-nums}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:3px;padding:3px;border-radius:var(--r);background:var(--sel)}
+.seg button{border:0;background:transparent;color:var(--muted);font:inherit;font-size:13px;padding:7px 8px;border-radius:4px;cursor:pointer;line-height:1.4}
+.seg button small{display:block;color:var(--muted);font-size:11.5px;opacity:.85}
+.seg button:hover{color:var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--panel);color:var(--ink);box-shadow:0 0 0 1px var(--line-strong)}
+.seg button[aria-pressed="true"] small{color:var(--muted)}
+.efwrap{margin:4px 0 14px}
+.efwrap>span{display:block;font-size:12.5px;color:var(--muted);margin-bottom:6px}
+.oldp{display:block;font-size:11.5px;font-weight:400;color:var(--muted);text-decoration:line-through;opacity:.7}
+.row.save{color:var(--muted)}
+.actions{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap}
+.actions .btn{flex:1 1 auto}
+.actions .btn.primary{flex-basis:100%}
+.gsum{margin-top:16px;padding-top:12px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+.gsum .row{padding:2px 0;font-size:12.5px}
+.toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%);background:var(--ink);color:var(--on-ink);padding:9px 16px;border-radius:var(--r);font-size:13px;opacity:0;pointer-events:none;transition:opacity .2s;max-width:90vw;z-index:50}
+.toast.show{opacity:1}
+.mbar{display:none}
+.empty{padding:28px;text-align:center;color:var(--muted)}
+#printQuote{display:none}
+
+@media (max-width: 900px){
+  .wrap{padding-top:24px}
+  .layout{grid-template-columns:1fr}
+  aside{position:static}
+  .mbar{display:flex;position:fixed;left:0;right:0;bottom:0;background:var(--panel);border-top:1px solid var(--line);padding:12px 20px;justify-content:space-between;align-items:center;z-index:40}
+  .mbar .v{font-family:"IBM Plex Sans",system-ui,sans-serif;font-weight:600;font-size:18px}
+  .toast{bottom:76px}
+}
+@media (max-width: 520px){
+  .item{grid-template-columns:20px minmax(0,1fr)}
+  .iprice{grid-column:2;text-align:left}
+}
+
+/* Print: show only the quotation */
+@media print{
+  body{background:#fff;color:#000}
+  .wrap,.mbar,.toast{display:none!important}
+  #printQuote{display:block;padding:24px;font-size:12.5px;color:#000;font-family:"Noto Sans Myanmar","IBM Plex Sans",sans-serif}
+  #printQuote .ph{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+  #printQuote .ph img{width:64px;height:64px;border-radius:4px;display:block;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  #printQuote h1{font-size:20px;margin:0 0 4px}
+  #printQuote table{width:100%;border-collapse:collapse;margin-top:10px}
+  #printQuote th,#printQuote td{border-bottom:1px solid #ccc;padding:5px 6px;text-align:left;vertical-align:top}
+  #printQuote td.n,#printQuote th.n{text-align:right;white-space:nowrap}
+  #printQuote tr.g td{background:#eee;font-weight:700}
+  #printQuote .tot td{border-top:2px solid #000;font-weight:700;font-size:14px}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <img class="logo" id="logo" alt="7Hours Auto Mobile" width="56" height="56">
+      <div>
+        <h1 data-i18n="h1"></h1>
+        <p class="sub" data-i18n-html="sub"></p>
+      </div>
+    </div>
+    <div class="topbtns"><div class="langseg" id="langSeg" role="group" aria-label="Language"><button type="button" data-lang="my" aria-pressed="true">မြန်မာ</button><button type="button" data-lang="en" aria-pressed="false">English</button></div><button class="theme-btn" id="themeBtn" type="button" data-i18n="theme"></button></div>
+  </header>
+
+  <div class="layout">
+    <main>
+      <div class="card toolbar">
+        <input type="search" id="q" data-i18n-ph="searchPh">
+        <label class="chk"><input type="checkbox" id="onlySel"> <span data-i18n="onlySel"></span></label>
+        <button class="btn" id="clearBtn" type="button" data-i18n="clearBtn"></button>
+      </div>
+      <div id="groups"></div>
+    </main>
+
+    <aside>
+      <div class="card sum">
+        <h3 data-i18n="sumTitle"></h3>
+        <div class="field"><span data-i18n="custLbl"></span><div class="fixed" id="cust"></div></div>
+        <label class="field"><span data-i18n="dateLbl"></span><input id="qdate" type="date"></label>
+
+        <div class="efwrap"><span data-i18n="perfLbl"></span><div class="seg" id="effortSeg" role="group" aria-label="Effort level"></div></div>
+
+        <div class="row"><span><span data-i18n="baseFeat"></span> (<b id="nBase">0</b>)</span><span class="v" id="vBase">0</span></div>
+        <div class="row"><span><span data-i18n="optSel"></span> (<b id="nOpt">0</b>)</span><span class="v" id="vOpt">0</span></div>
+        <div class="row save" id="saveRow" hidden><span id="saveLbl"></span><span class="v" id="vSave"></span></div>
+        <div class="total"><span class="l" data-i18n="total"></span><span class="v" id="vTotal">0</span></div>
+
+        <div class="gsum" id="gsum"></div>
+
+        <div class="actions">
+          <button class="btn primary" id="printBtn" type="button" data-i18n="printBtn"></button>
+          <button class="btn" id="copyBtn" type="button" data-i18n="copyBtn"></button>
+          <button class="btn" id="csvBtn" type="button" data-i18n="csvBtn"></button>
+          <button class="btn" id="jsonBtn" type="button" data-i18n="jsonBtn"></button>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<div class="mbar"><span><span data-i18n="total"></span> (<span id="mCount">0</span> <span data-i18n="unit"></span>)</span><span class="v" id="mTotal">0</span></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div id="printQuote"></div>
+
+<script>
+/* ==========================================================================
+   CONFIG — ဈေးနှုန်း၊ Base feature သတ်မှတ်ချက်ကို ဒီနေရာမှာပဲ ပြင်ပါ
+   --------------------------------------------------------------------------
+   price : ဈေးနှုန်း (Ks)         ← ဒီ ဂဏန်းတွေက နမူနာသာ၊ သင့်ဈေးအတိုင်း ပြင်ပါ
+   base  : true  → အမြဲပါ၊ ဖြုတ်မရ (customer က ရွေးစရာမလို)
+           false → customer ရွေးမှ ပါ
+   req   : [id,...] → ဒီ feature အလုပ်လုပ်ဖို့ လိုအပ်တဲ့ feature များ (ရွေးရင် အလိုအလျောက်ထည့်ပေး)
+   ========================================================================== */
+const CURRENCY = "Ks";
+const LOGO = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/6xaJSlACEQAAAAEAABZ/anVtYgAAAB5qdW1kYzJwYQARABCAAACqADibcQNjMnBhAAAAFllqdW1iAAAAR2p1bWRjMm1hABEAEIAAAKoAOJtxA3VybjpjMnBhOjE4MzU2ZjE4LTQ1NWYtNGM3MS1iYTdhLThjNzE3YTQ0YjFjOAAAAAOUanVtYgAAAClqdW1kYzJhcwARABCAAACqADibcQNjMnBhLmFzc2VydGlvbnMAAAAAuWp1bWIAAABEanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5pbmdyZWRpZW50LnYzAAAAABhjMnNoKln/jLo1lth+3iAMgDgKXwAAAG1jYm9yo2lkYzpmb3JtYXRqaW1hZ2UvanBlZ2ppbnN0YW5jZUlEeCx4bXA6aWlkOjI5ODgyMzIyLTc0N2QtNDAxMS1iMDQxLTBkMTQzOGYwMTdlNWxyZWxhdGlvbnNoaXBocGFyZW50T2YAAAHianVtYgAAAEFqdW1kY2JvcgARABCAAACqADibcRNjMnBhLmFjdGlvbnMudjIAAAAAGGMyc2hGX+33kiKiggY6GmcblE4OAAABmWNib3KiZ2FjdGlvbnOComZhY3Rpb25rYzJwYS5vcGVuZWRqcGFyYW1ldGVyc6FraW5ncmVkaWVudHOBomN1cmx4LXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaW5ncmVkaWVudC52M2RoYXNoWCATcNAmvCBs6SFDWbQi14mxLAKDHfmIZonnzWBZR+nnL6RmYWN0aW9ueB1jb20uYW50aHJvcGljLmNsYXVkZS5wcm92aWRlZGpwYXJhbWV0ZXJzoXgfY29tLmFudGhyb3BpYy5vcmlnaW4tY29uZmlkZW5jZWd1bmtub3dua2Rlc2NyaXB0aW9ueGZDbGF1ZGUgcHJvdmlkZWQgdGhpcyBmaWxlIGF0IHRoZSByZXF1ZXN0IG9mIGEgdXNlciBhbmQgbWF5IGhhdmUgY3JlYXRlZCBvciBtb2RpZmllZCB0aGUgZmlsZSBjb250ZW50cy5tc29mdHdhcmVBZ2VudKFkbmFtZWZDbGF1ZGVyYWxsQWN0aW9uc0luY2x1ZGVk9QAAAMhqdW1iAAAAQGp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuaGFzaC5kYXRhAAAAABhjMnNo5eyYTy32IqKpNoTjZLh50gAAAIBjYm9ypWNhbGdmc2hhMjU2Y3BhZE4AAAAAAAAAAAAAAAAAAGRoYXNoWCB4W0pTdlqi/oV0/sT1Gd0+9BQrGC6uC3PY2N0Qgubyl2RuYW1lbmp1bWJmIG1hbmlmZXN0amV4Y2x1c2lvbnOBomVzdGFydBRmbGVuZ3RoGRaLAAACPmp1bWIAAAAnanVtZGMyY2wAEQAQgAAAqgA4m3EDYzJwYS5jbGFpbS52MgAAAAIPY2JvcqVjYWxnZnNoYTI1NmlzaWduYXR1cmV4TXNlbGYjanVtYmY9L2MycGEvdXJuOmMycGE6MTgzNTZmMTgtNDU1Zi00YzcxLWJhN2EtOGM3MTdhNDRiMWM4L2MycGEuc2lnbmF0dXJlamluc3RhbmNlSUR4LHhtcDppaWQ6NzRiM2QxZTEtNWMwZi00YjdjLThiNWEtNmEzY2ExN2NhOTllcmNyZWF0ZWRfYXNzZXJ0aW9uc4OiY3VybHgtc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5pbmdyZWRpZW50LnYzZGhhc2hYIBNw0Ca8IGzpIUNZtCLXibEsAoMd+YhmiefNYFlH6ecvomN1cmx4KnNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuYWN0aW9ucy52MmRoYXNoWCCsj5ybT2yBkhOmzXt9WweTgFz5Z26oRrrkH9k2ZJnSO6JjdXJseClzZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmhhc2guZGF0YWRoYXNoWCCH2EL5sUYmysqqpn3C1Go1SOJfTgg8uOOqi36a4ilZ5XRjbGFpbV9nZW5lcmF0b3JfaW5mb6NkbmFtZW9BbnRocm9waWMgRmlsZXNndmVyc2lvbmUxLjAuMGtzcGVjVmVyc2lvbmUyLjQuMAAAEDhqdW1iAAAAKGp1bWRjMmNzABEAEIAAAKoAOJtxA2MycGEuc2lnbmF0dXJlAAAAEAhjYm9y0oRZAhKiASYYIVkCCjCCAgYwggGNoAMCAQICFEDloAruwjnQvriD+gZCBT1nVRMAMAoGCCqGSM49BAMDMEkxFzAVBgNVBAoTDkFudGhyb3BpYywgUEJDMS4wLAYDVQQDEyVBbnRocm9waWMgQ29udGVudCBDcmVkZW50aWFscyBSb290IENBMB4XDTI2MDgwNzE4NDM1NloXDTI4MDgwNjE5NDM1NlowRDEXMBUGA1UEChMOQW50aHJvcGljLCBQQkMxKTAnBgNVBAMTIEFudGhyb3BpYyBDbGF1ZGUgQ29udGVudCBTaWduaW5nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEmHoKa8tQGAUU1TS9QqU5W0Tp2N3XsvlK7BfQt6YWKwEzd2R3/dzKPEUDdCjlLjp9fT+KFjRVnuZ9v0oXvTe3k6NYMFYwDgYDVR0PAQH/BAQDAgeAMBUGA1UdJQQOMAwGCisGAQQBg+heAgEwDAYDVR0TAQH/BAIwADAfBgNVHSMEGDAWgBTOUeIEgU5kWyP448TPmj6cwddcwjAKBggqhkjOPQQDAwNnADBkAjAxcx0UngF60stVjs5G4T2eiptsBk5mf9oCtfJPAUBl8qs/PEXa8+gk1/X5QJ2DVcYCMHBfXN31YapiSqYvlIWrDVDJKOvXMl+kkz37Wt0PBI8sw486Mq6JeOhT+lRR4b1HCaFjcGFkWQ2eAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA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";   // Logo (JPG, base64 ထည့်ထား) — ပြောင်းလိုရင် ဒီစာကြောင်းကို အစားထိုးပါ
+const CUSTOMER = "7Hrs Automobile";   // ဖောက်သည် / ကုမ္ပဏီ အမည် (အသေ) — ပြင်လိုရင် ဒီနေရာမှာပဲ
+
+/* Effort level — factor 1 = ဈေးအပြည့် (အောက်ပါ price အတိုင်း)၊ 0.65 = 35% လျှော့
+   default : စတင်ဖွင့်ချိန်မှာ ရွေးထားမည့် level */
+const EFFORT = {
+  default: "high",
+  levels: {
+    high:   { label:"High Performance", note:"High Quality",     factor:1.0 },
+    medium: { label:"Low Performance",  note:"35% လျှော့",     factor:0.65 },
+  }
+};
+
+const GROUPS = [
+ { id:"core", title:"၁။ Core — အခြေခံ", items:[
+  { id:"login",      name:"Login / Session",                 desc:"အီးမေးလ်ဖြင့်ဝင်၊ ဤစက်တွင်မှတ်ထား၊ စကားဝှက်ပြောင်းခိုင်း (first login)၊ 403 စာမျက်နှာ", price:200000, base:true },
+  { id:"cars",       name:"Cars — ကားစာရင်း",                desc:"ရှာ/စစ်ထုတ်၊ အခြေအနေ filter၊ Stock ရက်၊ ပိုင်ဆိုင်မှု အမျိုးအစား", price:200000, base:true },
+  { id:"carnew",     name:"CarNew — ကားအသစ်ထည့်",            desc:"ဝယ်ဈေး၊ ပိုင်ဆိုင်မှု (ကိုယ်ပိုင် / Share / Member)၊ Ledger ထွက်ငွေ မှတ်", price:100000, base:true },
+  { id:"sales",      name:"Sales — အရောင်းစာရင်း",           desc:"အရောင်းစာရင်း၊ status (PAID / BALANCE_DUE / INSTALLMENT / CANCELLED)", price:100000, base:true },
+  { id:"salenew",    name:"SaleNew — အရောင်းအသစ် (၃ ဆင့်)",   desc:"ကားရွေး၊ ဝယ်သူ၊ ငွေပေးချေ + live အမြတ်တွက်ချက်ချက်", price:200000, base:true },
+  { id:"customers",  name:"Customers — ဖောက်သည်စာရင်း",      desc:"ရှာဖွေ၊ ဖောက်သည်စာရင်း၊ NRC ၄ ပိုင်း", price:100000, base:true },
+  { id:"ledger",     name:"Ledger — ငွေစာရင်းချုပ်",          desc:"ဝင်/ထွက် မှတ်တမ်းအားလုံး၊ filter၊ Void reversal ပြ", price:200000, base:true },
+ ]},
+ { id:"finance", title:"၂။ Finance — ငွေကြေး", items:[
+  { id:"expenses",   name:"Expenses — ကုန်ကျစရိတ်စာရင်း",    desc:"Scope (ကား / Member / ဆိုင်)၊ အမျိုးအစားအလိုက်၊ Void", price:300000, base:true },
+  { id:"expensenew", name:"ExpenseNew — ကုန်ကျစရိတ်အသစ်",    desc:"အမျိုးအစား၊ ငွေပေးချေနည်း၊ attachment", price:200000, base:true, req:["expenses"] },
+  { id:"income",     name:"Income — အခြားဝင်ငွေ",            desc:"ဝင်ငွေ မှတ်တမ်းထည့်/ကြည့်", price:100000, base:false },
+  { id:"transfers",  name:"Transfers — ငွေလွှဲ",              desc:"Account / ငွေပေးချေနည်း အချင်းချင်း လွှဲ", price:100000, base:false },
+  { id:"payments",   name:"Payments — ငွေပေးချေမှုစာရင်း",   desc:"PMT-NNNN အားလုံးကို တစ်နေရာတည်းကြည့်", price:100000, base:true },
+  { id:"balances",   name:"Balances — လက်ကျန်ငွေ",           desc:"ငွေပေးချေနည်းအလိုက် လက်ကျန်", price:200000, base:true },
+  { id:"paymethods", name:"PaymentMethods — ငွေပေးချေနည်း",   desc:"Cash / KPay / KBZ / AYA / CB စီမံ", price:200000, base:true },
+  { id:"expcats",    name:"ExpenseCategories — စရိတ်အမျိုးအစား", desc:"အမျိုးအစား ထည့်/ပြင်/ပိတ်", price:100000, base: true },
+ ]},
+ { id:"salesdetail", title:"၃။ Sales / Cars Detail — အသေးစိတ်နှင့် Modal များ", items:[
+  { id:"saledetail", name:"SaleDetail — အရောင်းအသေးစိတ်",     desc:"အရောင်းအချက်အလက်၊ ပေးချေမှု မှတ်တမ်း၊ ပြေစာ", price:400000, base:true, req:["sales"] },
+  { id:"paymodal",   name:"PaymentModal — ကျန်ငွေလက်ခံ",      desc:"ပေးချေမှုထပ်ထည့်၊ ကျန်ငွေထက်ပိုလျှင်ပိတ်၊ Void", price:200000, base:true, req:["saledetail"] },
+  { id:"cancelsale", name:"CancelSaleModal — အရောင်းပယ်ဖျက်",  desc:"အကြောင်းပြချက်၊ အတည်ပြု၊ ကား READY ပြန်၊ ledger reversal", price:200000, base:false, req:["saledetail"] },
+  { id:"soldhist",   name:"SoldHistory — ရောင်းပြီးကားမှတ်တမ်း", desc:"ရောင်းပြီးကား စာရင်း၊ အမြတ်", price:150000, base:false },
+  { id:"reserv",     name:"Reservations — ကြိုတင်မှာယူမှု",   desc:"စရံ၊ သက်တမ်းကုန်လျှင် auto ပြန်ထုတ်၊ ရောင်းချမှုသို့ ပြောင်း", price:300000, base:false },
+  { id:"carstatus",  name:"CarStatusModal — အခြေအနေပြောင်း",   desc:"ဝယ်ပြီး → စစ်ဆေး → ပြင်ဆင် → ရောင်းရန်အသင့် …", price:200000, base:true, req:["cars"] },
+  { id:"carcost",    name:"CarCostModal — ကုန်ကျစရိတ်ထည့်",   desc:"ပြင်ဆင်ခ / ကားကုန်ကျစရိတ် မှတ်", price:100000, base:true, req:["cars"] },
+  { id:"custmodal",  name:"CustomerModal — ဖောက်သည်အသစ်/ပြင်", desc:"NRC ၄ ပိုင်း၊ Customers နှင့် SaleNew နှစ်နေရာမှ ခေါ်", price:100000, base:true, req:["customers"] },
+ ]},
+ { id:"reports", title:"၄။ Reports — အစီရင်ခံစာ", items:[
+  { id:"rhub",       name:"Reports Hub",                    desc:"Report အားလုံးရဲ့ စာမျက်နှာ", price:230000, base:false },
+  { id:"rincome",    name:"Income Statement",               desc:"လစဉ်အမြတ်၊ ယခင်လနှင့်နှိုင်းယှဉ်၊ Excel", price:150000, base:false, req:["rhub"] },
+  { id:"rcarprofit", name:"Car Profit",                     desc:"မော်ဒယ်အလိုက် / ကားအလိုက် အမြတ်", price:100000, base:false, req:["rhub"] },
+  { id:"rstock",     name:"Stock Aging",                    desc:"0–15 / 16–30 / 31–45 / 46–60 / 60+ ရက် bucket", price:100000, base:false, req:["rhub"] },
+  { id:"rcash",      name:"Cash Flow",                      desc:"Opening + ဝင် − ထွက် = Closing", price:100000, base:false, req:["rhub"] },
+  { id:"rinvestor",  name:"Investor Report (P2)",           desc:"ရင်းနှီးငွေ၊ အမြတ်၊ ခွဲဝေပြီး/ကျန် — Excel/PDF", price:100000, base:false, p2:true, req:["rhub","inv-list"] },
+  { id:"remployee",  name:"Employee Report (P2)",           desc:"ဝန်ထမ်းအလိုက် လစာ + Car fee", price:100000, base:false, p2:true, req:["rhub","pay-emp"] },
+ ]},
+ { id:"admin", title:"၅။ Admin — စီမံခန့်ခွဲမှု", items:[
+  { id:"users",      name:"Users + UserModal + ResetPassword", desc:"အသုံးပြုသူ ထည့်/ပြင်/ပိတ်၊ ယာယီစကားဝှက်ထုတ်ပေး", price:200000, base:true },
+  { id:"roles",      name:"Roles — Role များ",              desc:"System role ၅ ခု၊ Custom role၊ ကူးယူဖန်တီး", price:200000, base:false },
+  { id:"matrix",     name:"Permission Matrix",              desc:"Role × Resource × C/R/U/D၊ Owner read-only", price:200000, base:false, req:["roles"] },
+  { id:"perms",      name:"Permissions — Permission စာရင်း", desc:"Permission ၄၃+ key စာရင်း", price:250000, base:false },
+  { id:"audit",      name:"Audit Logs",                     desc:"ပြောင်းလဲမှု diff၊ filter၊ CSV export", price:100000, base:false },
+  { id:"settings",   name:"Settings — ဆက်တင်",              desc:"ကုမ္ပဏီ ဆက်တင်၊ stock aging threshold၊ ပြောင်းသမျှ audit", price:100000, base:false },
+ ]},
+ { id:"account", title:"၆။ Account — ကိုယ်ပိုင်အကောင့်", items:[
+  { id:"profile",    name:"Profile",                        desc:"အမည်/ဖုန်း/ဘာသာစကား၊ ဝင်ထားသောစက်များ + Logout", price:200000, base:true },
+  { id:"chpass",     name:"ChangePassword",                 desc:"ခိုင်မာမှုမီတာ၊ policy စစ်၊ အခြားစက် logout", price:250000, base:true },
+ ]},
+ { id:"inst", title:"၇။ Installments — အရစ်ကျ (P2)", items:[
+  { id:"inst-list",    name:"Installments — စာချုပ်စာရင်း",    desc:"KPI ၄ ခု၊ status filter၊ ရှာဖွေ", price:200000, base:false, p2:true },
+  { id:"inst-new",     name:"InstallmentNew — စာချုပ်အသစ် (live schedule)", desc:"Principal / အတိုး / ကာလ ရွေးလျှင် အချိန်ဇယား auto တွက်", price:300000, base:false, p2:true, req:["inst-list"] },
+  { id:"inst-detail",  name:"InstallmentDetail — စာချုပ်အသေးစိတ်", desc:"အချိန်ဇယား၊ ပေးချေမှုမှတ်တမ်း၊ ပုံနှိပ်", price:200000, base:false, p2:true, req:["inst-list"] },
+  { id:"inst-pay",     name:"InstallmentPaymentModal — အရစ်ငွေလက်ခံ", desc:"အတိုးအရင်ဖြတ်၊ Principal လျှော့၊ status auto", price:200000, base:false, p2:true, req:["inst-detail"] },
+  { id:"inst-overdue", name:"InstallmentOverdue — ရက်လွန်စာရင်း",  desc:"ရက်အကြာ filter၊ ဖုန်းခေါ်၊ Excel", price:200000, base:false, p2:true, req:["inst-list"] },
+ ]},
+ { id:"inv", title:"၈။ Investors / Share ကား (P2)", items:[
+  { id:"inv-list",   name:"Investors — စာရင်း",              desc:"ရင်းနှီးငွေ၊ အမြတ်ခွဲဝေပြီး/ကျန် KPI", price:200000, base:false, p2:true },
+  { id:"inv-new",    name:"InvestorNew",                    desc:"Investor အသစ် စာရင်းသွင်း", price:100000, base:false, p2:true, req:["inv-list"] },
+  { id:"inv-edit",   name:"InvestorEdit",                   desc:"ပြင်ဆင်၊ Inactive (မဖျက်)", price:100000, base:false, p2:true, req:["inv-list"] },
+  { id:"inv-detail", name:"InvestorDetail",                 desc:"ရင်းနှီးထားသောကားများ၊ အမြတ်၊ ပေးချေမှုမှတ်တမ်း", price:100000, base:false, p2:true, req:["inv-list"] },
+  { id:"sc-list",    name:"ShareCars — Share ကားစာရင်း",      desc:"ဝေစု ၁၀၀% ✓၊ ခွဲဝေမှုအခြေအနေ", price:100000, base:false, p2:true },
+  { id:"sc-inv",     name:"ShareCarInvestments — ဝေစုသတ်မှတ်", desc:"ဝေစု % စုစုပေါင်း ၁၀၀% ဖြစ်မှသိမ်း (live)", price:100000, base:false, p2:true, req:["sc-list","inv-list"] },
+  { id:"sc-dist",    name:"ShareCarDistribution — အမြတ်ခွဲဝေ",  desc:"အမြတ်တွက်ချက်ပုံ၊ Preview၊ အတည်ပြု", price:100000, base:false, p2:true, req:["sc-inv"] },
+  { id:"profit-dist",name:"ProfitDistributions — ပေးချေမှု",   desc:"ပေးပြီးအဖြစ်မှတ် → Ledger ထွက်ငွေ auto", price:100000, base:false, p2:true, req:["sc-dist"] },
+ ]},
+ { id:"mem", title:"၉။ Members / Member ကား (P2)", items:[
+  { id:"mem-list",   name:"Members — စာရင်း",                desc:"KPI၊ ရှာဖွေ၊ ဖုန်းတစ်စိတ်ပြ", price:100000, base:false, p2:true },
+  { id:"mem-new",    name:"MemberNew",                      desc:"Member အသစ်", price:100000, base:false, p2:true, req:["mem-list"] },
+  { id:"mem-edit",   name:"MemberEdit",                     desc:"ပြင်ဆင်၊ Inactive", price:100000, base:false, p2:true, req:["mem-list"] },
+  { id:"mem-detail", name:"MemberDetail",                   desc:"Member ကားများ၊ ရောင်းရငွေ၊ အမြတ်/အရှုံး", price:100000, base:false, p2:true, req:["mem-list"] },
+  { id:"mc-list",    name:"MemberCars — Member ကားစာရင်း",    desc:"ကုန်ကျစရိတ်၊ အမြတ်/အရှုံး", price:200000, base:false, p2:true, req:["mem-list"] },
+  { id:"mc-assign",  name:"MemberCarAssignModal — ကားချိတ်",   desc:"သဘောတူကုန်ကျစရိတ် (Member ဈေး) နှင့်ချိတ်", price:100000, base:false, p2:true, req:["mc-list"] },
+  { id:"mc-exp",     name:"MemberCarExpenses — စရိတ်မှတ်",     desc:"ထည့်/ပြင်/Void၊ အမြတ်/အရှုံးတွက်ပုံ", price:100000, base:false, p2:true, req:["mc-list"] },
+ ]},
+ { id:"pay", title:"၁၀။ Payroll / Showroom အမြတ် (P2)", items:[
+  { id:"pay-emp",    name:"PayrollEmployees + EmployeeModal", desc:"ဝန်ထမ်းစာရင်း၊ ထည့်/ပြင်၊ User ချိတ်", price:100000, base:false, p2:true },
+  { id:"pay-rules",  name:"PayrollSalaryRules — လစာစည်းမျဉ်း", desc:"Base / Profit % / Car fee / Commission၊ အသက်ဝင်လ", price:100000, base:false, p2:true, req:["pay-emp"] },
+  { id:"pay-comm",   name:"PayrollCommissions",             desc:"ရောင်းချမှုအလိုက် Commission၊ Rate စမ်းတွက်", price:100000, base:false, p2:true, req:["pay-rules"] },
+  { id:"pay-run",    name:"PayrollRun — လစာတွက်ချက်",        desc:"ကာလရွေး → Preview → အတည်ပြု", price:100000, base:false, p2:true, req:["pay-rules"] },
+  { id:"pay-pay",    name:"PayrollPayments — လစာပေးချေမှု",   desc:"ပေးပြီးမှတ် → Ledger လစာစရိတ် auto", price:200000, base:false, p2:true, req:["pay-run"] },
+  { id:"showprofit", name:"ShowroomProfit — Final အမြတ်",    desc:"လိုင်း ၇ ခု၊ လအလိုက်နှိုင်းယှဉ်၊ Lock၊ PDF", price:200000, base:false, p2:true },
+ ]},
+ { id:"cd", title:"၁၁။ CarDetail — ကားအသေးစိတ် (Tab ၈ ခု · ဓာတ်ပုံ)", items:[
+  { id:"cd-main",    name:"CarDetail — ခေါင်းစဉ် / Lifecycle / ကုန်ကျစရိတ်ခွဲခြမ်း", desc:"Lifecycle တန်း၊ စုစုပေါင်းကုန်ကျ၊ အမြတ်ရရန်အနည်းဆုံးရောင်းဈေး", price:150000, base:true, req:["cars"] },
+  { id:"cd-summary", name:"Tab — အကျဉ်းချုပ်",               desc:"မော်ဒယ်၊ ဝယ်ယူသည့်ရက်၊ ဓာတ်ပုံ/စာရွက် အရေအတွက်", price:100000, base:true, req:["cd-main"] },
+  { id:"cd-buy",     name:"Tab — ဝယ်ယူမှု",                  desc:"ဝယ်ဈေး၊ ရောင်းသူ၊ ပြင်ဆင် (reversal + repost)", price:100000, base:true, req:["cd-main"] },
+  { id:"cd-repair",  name:"Tab — ပြင်ဆင်မှု",                desc:"ပြင်ဆင်ခမှတ်တမ်း", price:100000, base:true, req:["cd-main"] },
+  { id:"cd-cost",    name:"Tab — ကုန်ကျစရိတ်",               desc:"အခြားစရိတ် ထည့် / Void", price:100000, base:true, req:["cd-main"] },
+  { id:"cd-inv",     name:"Tab — ရင်းနှီးသူများ (P2)",        desc:"ကိုယ်ပိုင်ကား/Share ကား၊ ဝေစု၊ ခန့်မှန်းအမြတ်", price:100000, base:false, p2:true, req:["cd-main","sc-inv"] },
+  { id:"cd-photo",   name:"Tab — ဓာတ်ပုံ (upload + gallery + cover)", desc:"JPG/PNG ≤ 5 MB၊ slot ၆ ခု၊ Cover ရွေး", price:200000, base:false, p2:true, req:["cd-main"] },
+  { id:"cd-docs",    name:"Tab — စာရွက်စာတမ်း",              desc:"မှတ်ပုံတင်၊ စာချုပ်၊ အာမခံ တင်/ကြည့်/ဖျက် (≤ 10 MB)", price:100000, base:true, req:["cd-main"] },
+  { id:"cd-history", name:"Tab — မှတ်တမ်း",                  desc:"အခြေအနေပြောင်းလဲမှု + Audit (ကြည့်ရုံ)", price:100000, base:true, req:["cd-main"] },
+ ]},
+];
+/* ======================= CONFIG ပြီး ======================= */
+
+/* ---------- i18n (မြန်မာ / English) ---------- */
+/* UI စာသားများ ဒီနေရာမှာပဲ ပြင်ပါ။ Feature အမည်/ဖော်ပြချက် (အင်္ဂလိပ်) ကို EN_ITEMS မှာ id အလိုက် ပြင်ပါ။
+   EN_ITEMS မှာ မပါသော feature (ထပ်ထည့်ထားသော) ကို မြန်မာစာသားအတိုင်း ပြမည်။ */
+const I18N = {
+  my: {
+    title:"7Hrs Automobile — Feature ဈေးနှုန်း တွက်ချက်ရန်",
+    h1:"7Hrs Automobile — Feature ဈေးနှုန်း တွက်ချက်ရန်",
+    sub:"လိုချင်တဲ့ feature တွေကို ရွေးပါ — စုစုပေါင်း ဈေးနှုန်း အလိုအလျောက် ထွက်လာမယ်။ <b>Base</b> feature တွေက အမြဲပါပြီးသား ဖြစ်ပါတယ်။",
+    theme:"အရောင်ပြောင်း", searchPh:"Feature ရှာရန် (ဥပမာ Sale, Investor, လစာ)",
+    onlySel:"ရွေးထားတာပဲပြ", clearBtn:"Optional အားလုံး ပယ်ရန်",
+    sumTitle:"ဈေးနှုန်း အကျဉ်းချုပ်", custLbl:"ဖောက်သည် / ကုမ္ပဏီ အမည်",
+    dateLbl:"ရက်စွဲ", perfLbl:"Performance level", baseFeat:"Base feature", optSel:"ရွေးထားသော Optional",
+    total:"စုစုပေါင်း", printBtn:"Quotation ပုံနှိပ် / PDF", copyBtn:"စာသားကူးယူ", csvBtn:"Export CSV (Excel)", jsonBtn:"Export JSON", thGroup:"Group", thType:"Type", optTag:"Optional", exported:"Export လုပ်ပြီးပါပြီ", unit:"ခု",
+    selCount:(n,m)=>`${n}/${m} ရွေးထား`, selAll:"အားလုံးရွေး", clearGrp:"ပယ်", baseOnly:"Base သာ",
+    requires:"လိုအပ်:", empty:"ရှာတွေ့သော feature မရှိပါ",
+    toastDep:n=>`ဆက်စပ်နေသော ${n} ခုကိုပါ ပယ်လိုက်သည်`, toastReq:n=>`လိုအပ်သော ${n} ခုကိုပါ ထည့်ပေးလိုက်သည်`,
+    toastCleared:"Optional feature အားလုံး ပယ်ပြီး", copied:"ကူးယူပြီးပါပြီ", copyFail:"ကူးယူ၍မရပါ",
+    full:"High Quality", off:p=>`${p}% လျှော့`,
+    saveLbl:(l,p)=>`${l} လျှော့ဈေး (−${p}%)`,
+    qTitle:"7Hrs Automobile — System Quotation", customer:"ဖောက်သည်", date:"ရက်စွဲ", perf:"Performance",
+    thFeature:"Feature", thDesc:"အကျဉ်းချုပ်", thPrice:"ဈေးနှုန်း", baseRow:"Base feature", optRow:"Optional feature",
+    discRow:(l,full,p)=>`${l} — ဈေးအပြည့် ${full} မှ ${p}% လျှော့`, discCopy:"Performance လျှော့ဈေး", totalRow:"စုစုပေါင်း", baseTag:"Base",
+  },
+  en: {
+    title:"7Hrs Automobile — Feature Price Calculator",
+    h1:"7Hrs Automobile — Feature Price Calculator",
+    sub:"Tick the features you want — the total price is calculated automatically. <b>Base</b> features are always included.",
+    theme:"Theme", searchPh:"Search features (e.g. Sale, Investor, Payroll)",
+    onlySel:"Selected only", clearBtn:"Clear all optional",
+    sumTitle:"Price summary", custLbl:"Customer / company name",
+    dateLbl:"Date", perfLbl:"Performance level", baseFeat:"Base features", optSel:"Selected optional",
+    total:"Total", printBtn:"Print quotation / PDF", copyBtn:"Copy as text", csvBtn:"Export CSV (Excel)", jsonBtn:"Export JSON", thGroup:"Group", thType:"Type", optTag:"Optional", exported:"Exported", unit:"items",
+    selCount:(n,m)=>`${n}/${m} selected`, selAll:"Select all", clearGrp:"Clear", baseOnly:"Base only",
+    requires:"Requires:", empty:"No matching features",
+    toastDep:n=>`${n} dependent feature${n>1?"s":""} removed too`, toastReq:n=>`${n} required feature${n>1?"s":""} added too`,
+    toastCleared:"All optional features cleared", copied:"Copied", copyFail:"Could not copy",
+    full:"High Quality", off:p=>`${p}% off`,
+    saveLbl:(l,p)=>`${l} discount (−${p}%)`,
+    qTitle:"7Hrs Automobile — System Quotation", customer:"Customer", date:"Date", perf:"Performance",
+    thFeature:"Feature", thDesc:"Summary", thPrice:"Price", baseRow:"Base features", optRow:"Optional features",
+    discRow:(l,full,p)=>`${l} — ${p}% off the full price of ${full}`, discCopy:"Performance discount", totalRow:"Total", baseTag:"Base",
+  }
+};
+
+const EN_GROUPS = {
+  core:"1. Core — Foundation", finance:"2. Finance — Money", salesdetail:"3. Sales / Cars Detail — Details & Modals",
+  reports:"4. Reports", admin:"5. Admin — Management", account:"6. Account — My account", inst:"7. Installments (P2)",
+  inv:"8. Investors / Share cars (P2)", mem:"9. Members / Member cars (P2)", pay:"10. Payroll / Showroom profit (P2)",
+  cd:"11. CarDetail — Tabs & photos"
+};
+const EN_ITEMS = {
+  "login":["Login / Session","Email login, remember this device, force password change on first login, 403 page"],
+  "dashboard":["Dashboard","4 KPIs, this month's 7-line profit, stock status, recent sales, balances, global search"],
+  "cars":["Cars — Car list","Search & filter, status filter, stock days, ownership type"],
+  "carnew":["CarNew — Add a car","Purchase price, ownership (own / Share / Member), posts the expense to the ledger"],
+  "sales":["Sales — Sales list","Sales list with status (PAID / BALANCE_DUE / INSTALLMENT / CANCELLED)"],
+  "salenew":["SaleNew — New sale (3 steps)","Pick car, buyer, payment + live profit calculation"],
+  "customers":["Customers — Customer list","Search, customer list, 4-part NRC"],
+  "ledger":["Ledger","All in/out entries, filters, Void reversals shown"],
+  "expenses":["Expenses — Expense list","By scope (car / Member / shop) and category, Void"],
+  "expensenew":["ExpenseNew — New expense","Category, payment method, attachment"],
+  "income":["Income — Other income","Add / view income records"],
+  "transfers":["Transfers","Move money between accounts / payment methods"],
+  "payments":["Payments — Payment list","All PMT-NNNN payments in one place"],
+  "balances":["Balances","Balance per payment method"],
+  "paymethods":["PaymentMethods","Manage Cash / KPay / KBZ / AYA / CB"],
+  "expcats":["ExpenseCategories","Add / edit / deactivate categories"],
+  "saledetail":["SaleDetail — Sale details","Sale info, payment history, receipt"],
+  "paymodal":["PaymentModal — Receive balance","Add payments, block overpayment, Void"],
+  "cancelsale":["CancelSaleModal — Cancel sale","Reason, confirmation, car back to READY, ledger reversal"],
+  "soldhist":["SoldHistory — Sold cars","Sold cars list and profit"],
+  "reserv":["Reservations","Deposit, auto-release on expiry, convert to a sale"],
+  "carstatus":["CarStatusModal — Change status","Purchased → inspect → repair → ready for sale …"],
+  "carcost":["CarCostModal — Add cost","Record repair / other car costs"],
+  "custmodal":["CustomerModal — New / edit customer","4-part NRC, opened from Customers and SaleNew"],
+  "rhub":["Reports Hub","Landing page for all reports"],
+  "rincome":["Income Statement","Monthly profit, vs. previous month, Excel"],
+  "rcarprofit":["Car Profit","Profit by model / by car"],
+  "rstock":["Stock Aging","0–15 / 16–30 / 31–45 / 46–60 / 60+ day buckets"],
+  "rcash":["Cash Flow","Opening + in − out = Closing"],
+  "rinvestor":["Investor Report (P2)","Capital, profit, paid / remaining — Excel/PDF"],
+  "remployee":["Employee Report (P2)","Salary + car fee per employee"],
+  "users":["Users + UserModal + ResetPassword","Add / edit / deactivate users, issue a temporary password"],
+  "roles":["Roles","5 system roles, custom roles, copy permissions"],
+  "matrix":["Permission Matrix","Role × Resource × C/R/U/D, Owner read-only"],
+  "perms":["Permissions — Permission list","List of the 43+ permission keys"],
+  "audit":["Audit Logs","Change diffs, filters, CSV export"],
+  "settings":["Settings","Company settings, stock-aging threshold, every change audited"],
+  "profile":["Profile","Name / phone / language, signed-in devices + Logout"],
+  "chpass":["ChangePassword","Strength meter, policy check, sign out other devices"],
+  "inst-list":["Installments — Contract list","4 KPIs, status filter, search"],
+  "inst-new":["InstallmentNew — New contract (live schedule)","Choose principal / interest / term and the schedule is calculated automatically"],
+  "inst-detail":["InstallmentDetail — Contract details","Schedule, payment history, print"],
+  "inst-pay":["InstallmentPaymentModal — Receive installment","Interest first, then principal; status updates automatically"],
+  "inst-overdue":["InstallmentOverdue — Overdue list","Days-late filter, call button, Excel"],
+  "inv-list":["Investors — List","Capital, profit paid / remaining KPIs"],
+  "inv-new":["InvestorNew","Register a new investor"],
+  "inv-edit":["InvestorEdit","Edit, deactivate (never delete)"],
+  "inv-detail":["InvestorDetail","Invested cars, profit, payout history"],
+  "sc-list":["ShareCars — Share car list","Stake 100% ✓, distribution status"],
+  "sc-inv":["ShareCarInvestments — Set stakes","Save only when stakes total 100% (live)"],
+  "sc-dist":["ShareCarDistribution — Distribute profit","Profit calculation, preview, confirm"],
+  "profit-dist":["ProfitDistributions — Payouts","Mark as paid → ledger expense posted automatically"],
+  "mem-list":["Members — List","KPIs, search, masked phone numbers"],
+  "mem-new":["MemberNew","Register a new Member"],
+  "mem-edit":["MemberEdit","Edit, deactivate"],
+  "mem-detail":["MemberDetail","Member's cars, sales proceeds, profit / loss"],
+  "mc-list":["MemberCars — Member car list","Costs, profit / loss"],
+  "mc-assign":["MemberCarAssignModal — Assign car","Link a car with the agreed cost (Member price)"],
+  "mc-exp":["MemberCarExpenses — Record costs","Add / edit / Void, profit-loss breakdown"],
+  "pay-emp":["PayrollEmployees + EmployeeModal","Employee list, add / edit, link a User"],
+  "pay-rules":["PayrollSalaryRules — Salary rules","Base / Profit % / Car fee / Commission, effective month"],
+  "pay-comm":["PayrollCommissions","Commission per sale, trial-rate calculator"],
+  "pay-run":["PayrollRun — Run payroll","Pick period → Preview → Confirm"],
+  "pay-pay":["PayrollPayments — Salary payments","Mark as paid → salary expense posted to the ledger"],
+  "showprofit":["ShowroomProfit — Final profit","7 profit lines, month comparison, Lock, PDF"],
+  "cd-main":["CarDetail — Header / Lifecycle / Cost breakdown","Lifecycle strip, total cost, minimum break-even price"],
+  "cd-summary":["Tab — Summary","Model, purchase date, photo / document counts"],
+  "cd-buy":["Tab — Purchase","Purchase price, seller, edit (reversal + repost)"],
+  "cd-repair":["Tab — Repairs","Repair cost history"],
+  "cd-cost":["Tab — Costs","Other costs: add / Void"],
+  "cd-inv":["Tab — Investors (P2)","Own car / Share car, stakes, estimated profit"],
+  "cd-photo":["Tab — Photos (upload + gallery + cover)","JPG/PNG ≤ 5 MB, 6 slots, choose a cover photo"],
+  "cd-docs":["Tab — Documents","Registration, contracts, insurance: upload / view / delete (≤ 10 MB)"],
+  "cd-history":["Tab — History","Status changes + Audit (read-only)"],
+};
+
+let lang = "my";
+const t = (k, ...a) => { const v = I18N[lang][k]; return typeof v === "function" ? v(...a) : v; };
+const gTitle = (g, L = lang) => L === "en" ? (EN_GROUPS[g.id] || g.title) : g.title;
+const iName  = (i, L = lang) => L === "en" && EN_ITEMS[i.id] ? EN_ITEMS[i.id][0] : i.name;
+const iDesc  = (i, L = lang) => L === "en" && EN_ITEMS[i.id] ? EN_ITEMS[i.id][1] : i.desc;
+const levelNote = l => l.factor === 1 ? t("full") : t("off", Math.round((1-l.factor)*100));
+
+/* ---------- logic ---------- */
+const $ = s => document.querySelector(s);
+const ALL = GROUPS.flatMap(g => g.items.map(i => ({...i, group:g.id})));
+const BY_ID = Object.fromEntries(ALL.map(i => [i.id, i]));
+const DEPENDENTS = {};
+ALL.forEach(i => (i.req||[]).forEach(r => (DEPENDENTS[r] ||= []).push(i.id)));
+
+let effort = EFFORT.default;
+const factor = () => EFFORT.levels[effort].factor;
+const priceOf = i => Math.round(i.price * factor());
+const selected = new Set(ALL.filter(i => i.base).map(i => i.id));
+const fmt = n => n.toLocaleString("en-US") + " " + CURRENCY;
+const num = n => n.toLocaleString("en-US");
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+let toastTimer;
+function toast(msg){
+  const el = $("#toast"); el.textContent = msg; el.classList.add("show");
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove("show"), 2600);
+}
+
+function addWithReqs(id, added){
+  if (selected.has(id)) return;
+  selected.add(id); added.push(id);
+  (BY_ID[id].req||[]).forEach(r => addWithReqs(r, added));
+}
+function removeWithDeps(id, removed){
+  if (!selected.has(id) || BY_ID[id].base) return;
+  selected.delete(id); removed.push(id);
+  (DEPENDENTS[id]||[]).forEach(d => removeWithDeps(d, removed));
+}
+function toggle(id){
+  const it = BY_ID[id]; if (it.base) return;
+  if (selected.has(id)){
+    const removed = []; removeWithDeps(id, removed);
+    if (removed.length > 1) toast(t("toastDep", removed.length-1));
+  } else {
+    const added = []; addWithReqs(id, added);
+    if (added.length > 1) toast(t("toastReq", added.length-1));
+  }
+  render();
+}
+function toggleGroup(gid, on){
+  const g = GROUPS.find(x => x.id === gid);
+  g.items.forEach(i => { if (i.base) return; if (on){ addWithReqs(i.id, []); } else { removeWithDeps(i.id, []); } });
+  render();
+}
+
+function totals(){
+  let base = 0, opt = 0, nb = 0, no = 0;
+  let full = 0;
+  ALL.forEach(i => { if (!selected.has(i.id)) return; full += i.price; const p = priceOf(i); if (i.base){ base += p; nb++; } else { opt += p; no++; } });
+  return { base, opt, nb, no, total: base+opt, full, save: full-(base+opt) };
+}
+
+function applyI18n(){
+  document.documentElement.lang = lang;
+  document.title = t("title");
+  document.querySelectorAll("[data-i18n]").forEach(el => el.textContent = t(el.dataset.i18n));
+  document.querySelectorAll("[data-i18n-html]").forEach(el => el.innerHTML = t(el.dataset.i18nHtml));
+  document.querySelectorAll("[data-i18n-ph]").forEach(el => el.placeholder = t(el.dataset.i18nPh));
+  document.querySelectorAll("[data-lang]").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === lang));
+}
+function setLang(l){
+  lang = l;
+  applyI18n(); render();
+}
+
+function render(){
+  const q = $("#q").value.trim().toLowerCase();
+  const onlySel = $("#onlySel").checked;
+  let html = "";
+  GROUPS.forEach(g => {
+    const list = g.items.filter(i => {
+      if (onlySel && !selected.has(i.id)) return false;
+      if (!q) return true;
+      return ["my","en"].map(L => iName(i,L) + " " + iDesc(i,L) + " " + gTitle(g,L)).join(" ").toLowerCase().includes(q);
+    });
+    if (!list.length) return;
+    const gAll = g.items;
+    const selSum = gAll.filter(i => selected.has(i.id)).reduce((s,i) => s+priceOf(i), 0);
+    const selCnt = gAll.filter(i => selected.has(i.id)).length;
+    const optCount = gAll.filter(i => !i.base).length;
+    html += `<section class="card group"><div class="ghead"><div><h2>${esc(gTitle(g))}</h2>
+      <div class="meta">${t("selCount", selCnt, gAll.length)} · ${num(selSum)} ${CURRENCY}</div></div>
+      <div class="gact">${optCount ? `<button class="linkbtn" data-gon="${g.id}" type="button">${t("selAll")}</button><button class="linkbtn" data-goff="${g.id}" type="button">${t("clearGrp")}</button>` : `<span class="pill">${t("baseOnly")}</span>`}</div></div><div class="items">`;
+    list.forEach(i => {
+      const on = selected.has(i.id);
+      const reqNames = (i.req||[]).map(r => iName(BY_ID[r]).split(" — ")[0]).join(lang === "en" ? ", " : "၊ ");
+      html += `<label class="item ${on?"on":""} ${i.base?"base":""}" data-id="${i.id}">
+        <input type="checkbox" ${on?"checked":""} ${i.base?"disabled":""} aria-label="${esc(iName(i))}">
+        <div><div class="iname">${esc(iName(i))} ${i.base?'<span class="badge">BASE</span>':""}${i.p2?'<span class="badge p2">P2</span>':""}</div>
+          <div class="idesc">${esc(iDesc(i))}</div>${reqNames && !i.base ? `<div class="ireq">${t("requires")} ${esc(reqNames)}</div>`:""}</div>
+        <div class="iprice">${num(priceOf(i))} ${CURRENCY}${factor()!==1 ? `<span class="oldp">${num(i.price)}</span>`:""}</div></label>`;
+    });
+    html += `</div></section>`;
+  });
+  $("#groups").innerHTML = html || `<div class="card empty">${t("empty")}</div>`;
+
+  const tt = totals();
+  $("#nBase").textContent = tt.nb; $("#nOpt").textContent = tt.no;
+  $("#vBase").textContent = fmt(tt.base); $("#vOpt").textContent = fmt(tt.opt);
+  $("#vTotal").textContent = fmt(tt.total);
+  $("#saveRow").hidden = factor() === 1;
+  $("#saveLbl").textContent = t("saveLbl", EFFORT.levels[effort].label, Math.round((1-factor())*100));
+  $("#vSave").textContent = "−" + fmt(tt.save);
+  $("#effortSeg").innerHTML = Object.entries(EFFORT.levels).map(([k,v]) =>
+    `<button type="button" data-ef="${k}" aria-pressed="${k===effort}">${esc(v.label)}<small>${levelNote(v)}</small></button>`).join("");
+  $("#mTotal").textContent = fmt(tt.total); $("#mCount").textContent = tt.nb + tt.no;
+  $("#gsum").innerHTML = GROUPS.map(g => {
+    const s = g.items.filter(i => selected.has(i.id)).reduce((a,i) => a+priceOf(i), 0);
+    const label = lang === "en"
+      ? gTitle(g).replace(/^\d+\.\s*/, "").split(" — ")[0].split(" / ")[0].replace(/\s*\(P2\)/, "")
+      : g.title.replace(/^[^။]*။\s*/, "").split(" — ")[0].split(" / ")[0];
+    return `<div class="row"><span>${esc(label)}</span><span class="v">${num(s)}</span></div>`;
+  }).join("");
+}
+
+$("#groups").addEventListener("click", e => {
+  const on = e.target.closest("[data-gon]"), off = e.target.closest("[data-goff]");
+  if (on){ e.preventDefault(); toggleGroup(on.dataset.gon, true); return; }
+  if (off){ e.preventDefault(); toggleGroup(off.dataset.goff, false); return; }
+  const item = e.target.closest(".item");
+  if (!item) return;
+  e.preventDefault();
+  toggle(item.dataset.id);
+});
+$("#effortSeg").addEventListener("click", e => {
+  const b = e.target.closest("[data-ef]"); if (!b) return;
+  effort = b.dataset.ef; render();
+});
+$("#langSeg").addEventListener("click", e => {
+  const b = e.target.closest("[data-lang]"); if (!b) return;
+  setLang(b.dataset.lang);
+});
+$("#q").addEventListener("input", render);
+$("#onlySel").addEventListener("change", render);
+$("#clearBtn").addEventListener("click", () => {
+  selected.clear(); ALL.forEach(i => { if (i.base) selected.add(i.id); });
+  render(); toast(t("toastCleared"));
+});
+
+/* ---------- quotation ---------- */
+function selectedByGroup(){
+  return GROUPS.map(g => ({ g, items: g.items.filter(i => selected.has(i.id)) })).filter(x => x.items.length);
+}
+function buildPrint(){
+  const tt = totals();
+  const cust = CUSTOMER, d = $("#qdate").value;
+  const lvl = EFFORT.levels[effort].label;
+  let rows = "";
+  selectedByGroup().forEach(({g, items}) => {
+    rows += `<tr class="g"><td colspan="3">${esc(gTitle(g))}</td></tr>`;
+    items.forEach(i => rows += `<tr><td>${esc(iName(i))}${i.base?` (${t("baseTag")})`:""}</td><td>${esc(iDesc(i))}</td><td class="n">${num(priceOf(i))}</td></tr>`);
+  });
+  const efRow = factor() !== 1 ? `<tr><td colspan="2">${esc(t("discRow", lvl, num(tt.full), Math.round((1-factor())*100)))}</td><td class="n">−${num(tt.save)}</td></tr>` : "";
+  $("#printQuote").innerHTML = `<div class="ph"><img src="${LOGO}" alt=""><div><h1>${esc(t("qTitle"))}</h1>
+    <div>${cust ? esc(t("customer"))+": <b>"+esc(cust)+"</b> · " : ""}${esc(t("date"))}: ${esc(d || "")} · ${esc(t("perf"))}: ${esc(lvl)}</div></div></div>
+    <table><thead><tr><th>${t("thFeature")}</th><th>${t("thDesc")}</th><th class="n">${t("thPrice")} (${CURRENCY})</th></tr></thead><tbody>${rows}
+    <tr><td colspan="2">${t("baseRow")} (${tt.nb})</td><td class="n">${num(tt.base)}</td></tr>
+    <tr><td colspan="2">${t("optRow")} (${tt.no})</td><td class="n">${num(tt.opt)}</td></tr>
+    ${efRow}
+    <tr class="tot"><td colspan="2">${t("totalRow")}</td><td class="n">${num(tt.total)} ${CURRENCY}</td></tr></tbody></table>`;
+}
+$("#printBtn").addEventListener("click", () => { buildPrint(); window.print(); });
+window.addEventListener("beforeprint", buildPrint);
+
+$("#copyBtn").addEventListener("click", async () => {
+  const cust = CUSTOMER, d = $("#qdate").value;
+  const rows = exportRows();
+  let s = t("qTitle") + "\n" + (cust ? t("customer")+": "+cust+"\n" : "") + (d ? t("date")+": "+d+"\n" : "") + "\n";
+  selectedByGroup().forEach(({g, items}) => {
+    s += gTitle(g) + "\n";
+    items.forEach(i => s += " - " + iName(i) + (i.base?` [${t("baseTag")}]`:"") + "\n");
+    s += "\n";
+  });
+  s += t("baseRow") + ": " + rows.filter(r => r.base).length + "\n" + t("optRow") + ": " + rows.filter(r => !r.base).length + "\n";
+  try { await navigator.clipboard.writeText(s); toast(t("copied")); }
+  catch(_){
+    const ta = document.createElement("textarea"); ta.value = s; document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); toast(t("copied")); } catch(__){ toast(t("copyFail")); }
+    ta.remove();
+  }
+});
+
+/* export */
+function exportRows(){
+  const out = [];
+  selectedByGroup().forEach(({g, items}) => items.forEach(i => out.push({ id:i.id, group:gTitle(g), name:iName(i), desc:iDesc(i), base:!!i.base, full:i.price, price:priceOf(i) })));
+  return out;
+}
+function download(name, mime, text, bom){
+  const blob = new Blob([(bom ? "\uFEFF" : "") + text], { type: mime + ";charset=utf-8" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob); a.download = name;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  toast(t("exported"));
+}
+function fileBase(){
+  const cust = CUSTOMER.replace(/[\\/:*?"<>|\s]+/g, "-").replace(/^-+|-+$/g, "");
+  return "7hrs-quotation" + (cust ? "-" + cust : "") + "-" + ($("#qdate").value || new Date().toISOString().slice(0,10));
+}
+const csvCell = v => { v = String(v == null ? "" : v); return /[",\n\r]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; };
+$("#csvBtn").addEventListener("click", () => {
+  const rows = exportRows();
+  const line = a => a.map(csvCell).join(",");
+  const lines = [line(["#", t("thGroup"), t("thFeature"), t("thDesc"), t("thType")])];
+  rows.forEach((r, n) => lines.push(line([n+1, r.group, r.name, r.desc, r.base ? t("baseTag") : t("optTag")])));
+  download(fileBase() + ".csv", "text/csv", lines.join("\r\n"), true);
+});
+$("#jsonBtn").addEventListener("click", () => {
+  const rows = exportRows();
+  const data = {
+    title: t("qTitle"), customer: CUSTOMER, date: $("#qdate").value, language: lang,
+    count: rows.length, baseCount: rows.filter(r => r.base).length, optionalCount: rows.filter(r => !r.base).length,
+    items: rows.map(r => ({ id:r.id, group:r.group, name:r.name, description:r.desc, base:r.base }))
+  };
+  download(fileBase() + ".json", "application/json", JSON.stringify(data, null, 2), false);
+});
+
+/* theme */
+$("#themeBtn").addEventListener("click", () => {
+  const r = document.documentElement;
+  const dark = r.dataset.theme === "dark";
+  r.dataset.theme = dark ? "light" : "dark";
+});
+
+$("#cust").textContent = CUSTOMER;
+$("#logo").src = LOGO;
+{ const ic = document.createElement("link"); ic.rel = "icon"; ic.href = LOGO; document.head.appendChild(ic); }
+$("#qdate").value = new Date().toISOString().slice(0,10);
+applyI18n();
+render();
+</script>
+</body>
+</html>
